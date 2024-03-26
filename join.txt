@@ -78,5 +78,32 @@ WHERE departments.id = 5;
 
 
 7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
-per ogni esame, stampando anche il voto massimo. Successivamente,
+per ogni esame, stampando anche il voto massimo. 
+
+
+SELECT students.id, COUNT(exam_student.exam_id) AS 'trial',  MAX(exam_student.vote) AS 'max_vote'
+FROM students
+
+INNER JOIN exam_student
+ON students.id = exam_student.student_id
+INNER JOIN exams
+ON exam_student.student_id = exams.id
+GROUP BY students.id;
+
+
+
+
+Successivamente,
 filtrare i tentativi con voto minimo 18.
+
+
+SELECT students.id, COUNT(exams.id) AS 'trial',  MAX(exam_student.vote) AS 'max_vote'
+FROM students
+
+INNER JOIN exam_student
+ON students.id = exam_student.student_id
+INNER JOIN exams
+ON exam_student.student_id = exams.id
+GROUP BY students.id
+
+HAVING MAX(exam_student.vote) >= 18;
